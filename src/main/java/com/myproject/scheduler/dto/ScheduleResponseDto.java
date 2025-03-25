@@ -3,7 +3,7 @@ package com.myproject.scheduler.dto;
 import com.myproject.scheduler.entity.Scheduler;
 import lombok.Getter;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter
 public class ScheduleResponseDto {
@@ -12,8 +12,8 @@ public class ScheduleResponseDto {
     private String title;
     private String contents;
     private String writer;
-    private Timestamp createdAt;
-    private Timestamp updatedAt;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public ScheduleResponseDto(Scheduler schedule) {
         this.id = schedule.getId();

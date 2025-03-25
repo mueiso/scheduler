@@ -4,7 +4,7 @@ import com.myproject.scheduler.dto.ScheduleRequestDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
@@ -19,13 +19,14 @@ public class Scheduler {
     private String contents;  // 스케줄 내용
     private String writer;  // 작성자명
     private String password;  //  비밀번호
-    private Timestamp createdAt;  // 작성 날짜 & 시간
-    private Timestamp updatedAt;  // 수정 날짜 & 시간
+    private LocalDateTime createdAt;  // 작성 날짜 & 시간
+    private LocalDateTime updatedAt;  // 수정 날짜 & 시간
 
     // 일정 수정 메서드
     public void edit(ScheduleRequestDto dto) {
         this.title = dto.getTitle();
         this.contents = dto.getContents();
+        this.password = dto.getPassword();
     }
 
 }

@@ -6,6 +6,7 @@ import com.myproject.scheduler.entity.Scheduler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +32,7 @@ public class ScheduleController {
         /**
          * 요청받은 데이터로 Schedule 객체 생성
          */
-        Scheduler schedule = new Scheduler(id, dto.getTitle(), dto.getContents(), dto.getWriter(), dto.getPassword());
+        Scheduler schedule = new Scheduler(id, dto.getTitle(), dto.getContents(), dto.getWriter(), dto.getPassword(), LocalDateTime.now(), LocalDateTime.now());
 
         /**
          * Inmemory DB에 Schedule 저장
