@@ -7,3 +7,10 @@
 | 스케줄 수정(전체) |  PUT   |   /{id}    |   id (Long)   |         X         |             {<br/>"title": "수정된 제목",<br/>"contents": "수정된 내용"             | {<br/>"id": 1,<br/>"title": "수정된 제목",<br/>"contents": "수정된 내용",<br/>"writer": 작성자명 |  200: 정상수정   |
 |   스케줄 삭제   | DELETE |   /{id}    |   id (Long)   |         X         |                                     X                                     |                                  "msg": "일정 삭제 완료"                                  |  200: 정상삭제   |
 
+--------------
+
+# ERD
+
+
+
+
