@@ -3,6 +3,7 @@ package com.myproject.scheduler.controller;
 import com.myproject.scheduler.dto.ScheduleRequestDto;
 import com.myproject.scheduler.dto.ScheduleResponseDto;
 import com.myproject.scheduler.entity.Scheduler;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -11,11 +12,12 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/schedules")
+@RequiredArgsConstructor
 public class ScheduleController {
 
     private final Map<Long, Scheduler> scheduleList = new HashMap<>();
 
-    // 1. 일정 추가
+    // 1. 일정 추가 API
     @PostMapping
     public ScheduleResponseDto createSchedule(@RequestBody ScheduleRequestDto dto) {
 
@@ -29,7 +31,7 @@ public class ScheduleController {
         /**
          * 요청받은 데이터로 Schedule 객체 생성
          */
-        Scheduler schedule = new Scheduler(id, dto.getTitle(), dto.getContents(), dto.getWriter());
+        Scheduler schedule = new Scheduler(id, dto.getTitle(), dto.getContents(), dto.getWriter(), dto.getPassword());
 
         /**
          * Inmemory DB에 Schedule 저장
@@ -39,7 +41,7 @@ public class ScheduleController {
         return new ScheduleResponseDto(schedule);
     }
 
-    // 2. 일정 조회
+    // 2. 일정 단일 조회 API
     @GetMapping("/{id}")
     public ScheduleResponseDto findScheduleById(@PathVariable Long id) {
 
@@ -48,9 +50,19 @@ public class ScheduleController {
         return new ScheduleResponseDto(schedule);
     }
 
-// 3. 일정 수정
+    // 3. 일정 목록 조회 API
+    @GetMapping()
+    public ScheduleResponseDto showAllSchedules(@PathVariable Long id) {
+
+        Scheduler schedule = scheduleList.get(id);
+
+        return new ScheduleResponseDto(schedule);
+    }
+
+    // 4. 일정 단일 (전체)수정 API
     @PutMapping("/{id}")
     public ScheduleResponseDto editScheduleById(@PathVariable Long id, @RequestBody ScheduleRequestDto dto) {
+
         Scheduler schedule = scheduleList.get(id);
 
         schedule.edit(dto);
@@ -58,9 +70,10 @@ public class ScheduleController {
         return new ScheduleResponseDto(schedule);
     }
 
-// 4. 일정 삭제
+    // 5. 일정 삭제 API
     @DeleteMapping("/{id}")
     public String deleteSchedule(@PathVariable Long id) {
+
         scheduleList.remove(id);  // remove 함수 사용
 
         return "일정 삭제 완료";
