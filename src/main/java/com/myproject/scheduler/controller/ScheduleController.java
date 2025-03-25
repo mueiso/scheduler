@@ -63,7 +63,7 @@ public class ScheduleController {
 
     // 4. 일정 단일 (전체)수정 API
     @PutMapping("/{id}")
-    public ScheduleResponseDto editScheduleById(@PathVariable Long id, @RequestBody ScheduleRequestDto dto) {
+    public ScheduleResponseDto editScheduleById(@Valid @PathVariable Long id, @RequestBody ScheduleRequestDto dto) {
 
         Scheduler schedule = scheduleList.get(id);
 

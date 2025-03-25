@@ -20,6 +20,7 @@ public class Scheduler {
     private String writer;  // 작성자명
     private String password;  //  비밀번호
     private LocalDateTime editedAt;  // 작성 날짜 & 시간
+
     // 일정 수정 메서드
     public void edit(ScheduleRequestDto dto) {
         this.title = dto.getTitle();
