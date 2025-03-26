@@ -8,9 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping("/schedules")
@@ -53,12 +51,16 @@ public class ScheduleController {
     }
 
     // 3. 일정 목록 조회 API
-    @GetMapping()
-    public ScheduleResponseDto showAllSchedules(@PathVariable Long id) {
+    @GetMapping
+    public List<ScheduleResponseDto> showAllSchedules() {
 
-        Scheduler schedule = scheduleList.get(id);
+        List<ScheduleResponseDto> scheduleResponseList = new ArrayList<>();
 
-        return new ScheduleResponseDto(schedule);
+        for(Scheduler scheduler : scheduleList.values()) {
+            scheduleResponseList.add(new ScheduleResponseDto(scheduler));
+        }
+
+        return scheduleResponseList;
     }
 
     // 4. 일정 단일 (전체)수정 API
@@ -67,17 +69,33 @@ public class ScheduleController {
 
         Scheduler schedule = scheduleList.get(id);
 
-        schedule.edit(dto);
+        if(schedule.getPassword().equals(dto.getPassword())) {
+
+            schedule.edit(dto);
+        } else {
+            System.out.println("비밀번호가 다릅니다.");
+        }
 
         return new ScheduleResponseDto(schedule);
     }
 
     // 5. 일정 삭제 API
     @DeleteMapping("/{id}")
-    public String deleteSchedule(@PathVariable Long id) {
+    public String deleteSchedule(@PathVariable Long id, @RequestBody String password) {
 
-        scheduleList.remove(id);  // remove 함수 사용
+        Scheduler schedule = scheduleList.get(id);
+
+        if(schedule.getPassword().equals(password)) {
+
+            scheduleList.remove(id);  // remove 함수 사용
+
+            System.out.println("삭제되었습니다.");
+        } else {
+
+            return "비밀번호가 다릅니다.";
+        }
 
         return "일정 삭제 완료";
     }
+
 }

@@ -23,9 +23,10 @@ public class Scheduler {
 
     // 일정 수정 메서드
     public void edit(ScheduleRequestDto dto) {
-        this.title = dto.getTitle();
-        this.contents = dto.getContents();
-        this.password = dto.getPassword();
+
+            this.title = dto.getTitle();
+            this.contents = dto.getContents();
+            this.password = dto.getPassword();
     }
 
 }
