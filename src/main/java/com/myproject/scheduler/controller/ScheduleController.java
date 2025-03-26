@@ -28,18 +28,15 @@ public class ScheduleController {
          */
         Long id = scheduleList.isEmpty() ? 1 : Collections.max(scheduleList.keySet()) + 1;
 
-        /**
-         * 요청받은 데이터로 Schedule 객체 생성
-         */
+        // 요청받은 데이터로 Schedule 객체 생성
         Scheduler schedule = new Scheduler(id, dto.getTitle(), dto.getContents(), dto.getWriter(), dto.getPassword(), LocalDateTime.now());
 
-        /**
-         * Inmemory DB에 Schedule 저장
-         */
+        // Inmemory DB에 Schedule 저장
         scheduleList.put(id, schedule);
 
         return new ScheduleResponseDto(schedule);
     }
+
 
     // 2. 일정 단일 조회 API
     @GetMapping("/{id}")
@@ -49,6 +46,7 @@ public class ScheduleController {
 
         return new ScheduleResponseDto(schedule);
     }
+
 
     // 3. 일정 목록 조회 API
     @GetMapping
@@ -62,6 +60,7 @@ public class ScheduleController {
 
         return scheduleResponseList;
     }
+
 
     // 4. 일정 단일 (전체)수정 API
     @PutMapping("/{id}")
@@ -79,7 +78,12 @@ public class ScheduleController {
         return new ScheduleResponseDto(schedule);
     }
 
+
     // 5. 일정 삭제 API
+    /**
+     * id 를 통해 단일 일정 삭제 가능
+     * 일정 생성 시 기입한 비밀번호와 삭제 시 비밀번호 일치할 경우 삭제 가능
+     */
     @DeleteMapping("/{id}")
     public String deleteSchedule(@PathVariable Long id, @RequestBody String password) {
 
